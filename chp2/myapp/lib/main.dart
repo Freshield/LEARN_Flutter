@@ -10,6 +10,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      initialRoute: '/',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -26,7 +27,28 @@ class MyApp extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+//      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      routes: {
+//        'new_page': (context) => NewRoute(),
+//        '/': (context) => MyHomePage(title: 'Flutter Demo Home Page'),
+        '/': (context) => NewRoute(),
+        'echo_page': (context) => EchoRoute(),
+        'tip_page': (context) => TipRoute(text: ModalRoute.of(context).settings.arguments,),
+      },
+//      onGenerateRoute: (RouteSettings settings){
+//        return MaterialPageRoute(builder: (context){
+//          String routeName = settings.name;
+//          print('here');
+//          print(routeName);
+//          var routes = {
+//            'new_page': NewRoute(),
+//            '/': MyHomePage(title: 'Flutter Demo Home Page'),
+//            'echo_page': EchoRoute(),
+//            'tip_page': TipRoute(text: ModalRoute.of(context).settings.arguments,),
+//          };
+//          return routes[routeName];
+//        });
+//      },
     );
   }
 }
@@ -108,23 +130,31 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Text('open new route'),
               textColor: Colors.blue,
               onPressed: (){
-                Navigator.push(context,
-                MaterialPageRoute(builder: (context){
-                  return NewRoute();
-                }));
+                Navigator.pushNamed(context, 'new_page', arguments: 'hi');
+//                Navigator.push(context,
+//                MaterialPageRoute(builder: (context){
+//                  return NewRoute();
+//                }));
               },
             ),
             RaisedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, 'echo_page', arguments: 'hi');
+              },
+              child: Text('echo page'),
+            ),
+            RaisedButton(
               onPressed: () async {
-                var result = await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context){
-                      return TipRoute(
-                        text: '我是提示xxxx',
-                      );
-                    }
-                  ));
+//                var result = await Navigator.push(
+//                  context,
+//                  MaterialPageRoute(
+//                    builder: (context){
+//                      return TipRoute(
+//                        text: '我是提示xxxx',
+//                      );
+//                    }
+//                  ));
+                var result = await Navigator.pushNamed(context, 'tip_page', arguments: '我是提示xxxx');
                 print('路由返回值：$result');
               },
               child: Text('打开提示页'),
@@ -188,3 +218,25 @@ class TipRoute extends StatelessWidget {
   }
 }
 
+class EchoRoute extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    var args = ModalRoute.of(context).settings.arguments;
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Echo Route'),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(18),
+        child: Center(
+          child: Column(
+            children: <Widget>[
+              Text(args)
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
