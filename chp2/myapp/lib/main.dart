@@ -29,9 +29,8 @@ class MyApp extends StatelessWidget {
       ),
 //      home: MyHomePage(title: 'Flutter Demo Home Page'),
       routes: {
-//        'new_page': (context) => NewRoute(),
-//        '/': (context) => MyHomePage(title: 'Flutter Demo Home Page'),
-        '/': (context) => NewRoute(),
+        'new_page': (context) => NewRoute(),
+        '/': (context) => MyHomePage(title: 'Flutter Demo Home Page'),
         'echo_page': (context) => EchoRoute(),
         'tip_page': (context) => TipRoute(text: ModalRoute.of(context).settings.arguments,),
       },
