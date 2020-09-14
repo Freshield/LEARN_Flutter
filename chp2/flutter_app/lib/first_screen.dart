@@ -12,8 +12,9 @@ class FirstScreen extends StatelessWidget {
       body: Center(
         child: RaisedButton(
           child: Text('Launch screen'),
-          onPressed: (){
-            Navigator.pushNamed(context, '/second');
+          onPressed: () {
+            Navigator.pushNamed(context, '/second', arguments: 'hi');
+            print('get rst');
           },
         ),
       ),
