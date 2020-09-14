@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:english_words/english_words.dart';
 
 
 class SecondScreen extends StatelessWidget {
@@ -9,13 +10,14 @@ class SecondScreen extends StatelessWidget {
     print('here');
     var args = ModalRoute.of(context).settings.arguments;
     print(args);
+    final wordPair = new WordPair.random();
     return Scaffold(
       appBar: AppBar(
         title: Text('Second Screen'),
       ),
       body: Center(
         child: RaisedButton(
-          child: Text('Go back!'),
+          child: Text(wordPair.toString()),
           onPressed: (){
             Navigator.pop(context);
             print('pop');
